@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nervensystem-Check – maria.familienglueck</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#181818;color:#f0ede8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:16px;line-height:1.7}
+.page{display:none}.page.active{display:block}
+.wrap{max-width:620px;margin:0 auto;padding:0 1.5rem}
+.eyebrow{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#666;margin-bottom:.6rem}
+.line{width:40px;height:2px;background:#8c3a3a;margin:1.4rem 0}
+h1{font-size:clamp(2rem,6vw,2.8rem);font-weight:500;line-height:1.1;margin-bottom:1.5rem}
+.hero{padding:4rem 1.5rem 3rem;max-width:620px;margin:0 auto}
+.hero p{font-size:15px;color:#a89e94;line-height:1.8;margin-bottom:.8rem}
+.brand{font-size:12px;letter-spacing:.1em;color:#666;text-align:center;padding:2rem 0 1.5rem}
+.btn{background:#8c3a3a;color:#f0ede8;border:none;padding:.95rem 2rem;border-radius:6px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;display:inline-block;margin-top:2.5rem}
+.btn:hover{background:#a04444}
+.btn-lg{padding:1rem 2.5rem;border-radius:8px;font-size:16px;margin-top:0}
+.btn:disabled{background:#2e2e2e;color:#555;cursor:not-allowed}
+.quiz-wrap{padding:3rem 0 4rem}
+.intro-box{background:#222;border:.5px solid #2e2e2e;border-radius:10px;padding:1.25rem 1.5rem;margin-bottom:2rem;font-size:14px;color:#a89e94;line-height:1.75}
+.intro-box strong{color:#f0ede8;font-weight:500}
+.prog-meta{display:flex;justify-content:space-between;font-size:12px;color:#666;margin-bottom:.4rem}
+.prog-bar{height:3px;background:#2e2e2e;border-radius:2px;overflow:hidden;margin-bottom:2rem}
+.prog-fill{height:100%;background:#8c3a3a;border-radius:2px;transition:width .35s}
+.qcard{background:#222;border:.5px solid #2e2e2e;border-radius:12px;padding:1.5rem;margin-bottom:.75rem;opacity:0;transform:translateY(16px);transition:opacity .4s ease,transform .4s ease}
+.qcard.visible{opacity:1;transform:translateY(0)}
+.qlabel{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#8c3a3a;margin-bottom:.5rem}
+.qtext{font-size:15px;color:#f0ede8;line-height:1.6;margin-bottom:1.25rem}
+.arow{display:flex;gap:.6rem}
+.abtn{flex:1;background:#181818;border:.5px solid #333;color:#a89e94;padding:.6rem .4rem;border-radius:6px;font-size:13px;cursor:pointer;text-align:center;font-family:inherit;transition:all .15s}
+.abtn:hover{border-color:#8c3a3a;color:#f0ede8}
+.abtn.sgut{background:#162016;border-color:#2a6a2a;color:#80c080}
+.abtn.smid{background:#252010;border-color:#7a6a2a;color:#d4c070}
+.abtn.sschlecht{background:#2e1818;border-color:#8c3a3a;color:#e8a0a0}
+.sub-wrap{margin-top:2rem;text-align:center;opacity:0;transition:opacity .4s}
+.sub-wrap.visible{opacity:1}
+.sub-hint{font-size:13px;color:#666;margin-top:.75rem}
+.res-top{padding:3.5rem 1.5rem 2.5rem;max-width:620px;margin:0 auto}
+.srow{display:flex;align-items:baseline;gap:.4rem;margin-bottom:1.5rem}
+.snum{font-size:4rem;font-weight:500;line-height:1}
+.smax{font-size:1.1rem;color:#666}
+.cg{color:#5a9e5a}.cy{color:#b8a040}.cr{color:#e8a0a0}
+.barout{margin-bottom:2rem}
+.barlabels{display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:.4rem}
+.bartrack{height:5px;background:#2e2e2e;border-radius:3px;overflow:hidden}
+.barfill{height:100%;border-radius:3px;width:0;transition:width 1s ease}
+.fg{background:#5a9e5a}.fy{background:#b8a040}.fr{background:#8c3a3a}
+.rtitle{font-size:1.45rem;font-weight:500;line-height:1.3;margin-bottom:1.25rem}
+.rbody{font-size:15px;color:#a89e94;line-height:1.8}
+.rbody p+p{margin-top:.85rem}
+.rbody strong{color:#f0ede8;font-weight:500}
+.nextsec{background:#222;padding:2rem 1.5rem;border-top:1px solid #2e2e2e;border-bottom:1px solid #2e2e2e}
+.nextinner{max-width:620px;margin:0 auto}
+.nextlabel{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#8c3a3a;margin-bottom:1.25rem}
+.step{display:flex;gap:1rem;align-items:flex-start;background:#2a2a2a;border:.5px solid #2e2e2e;border-radius:10px;padding:1.1rem 1.25rem;margin-bottom:.75rem}
+.stepnum{min-width:28px;height:28px;border-radius:50%;background:#8c3a3a;color:#f0ede8;font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stept{font-size:14px;font-weight:500;color:#f0ede8;margin-bottom:.2rem}
+.stepp{font-size:13px;color:#a89e94;line-height:1.6}
+.ctasec{padding:3rem 1.5rem;text-align:center;max-width:620px;margin:0 auto}
+.ctaeye{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#666;margin-bottom:.75rem}
+.ctah{font-size:1.35rem;font-weight:500;margin-bottom:.5rem;line-height:1.3}
+.ctasub{font-size:14px;color:#a89e94;margin-bottom:1.75rem;line-height:1.7}
+.btnwa{display:inline-block;background:#8c3a3a;color:#f0ede8;text-decoration:none;padding:1rem 2.25rem;border-radius:8px;font-size:15px;font-weight:500;transition:background .2s}
+.btnwa:hover{background:#a04444}
+.ctanote{font-size:12px;color:#666;margin-top:1rem}
+</style>
+</head>
+<body>
+
+<div id="p-start" class="page active">
+  <div class="hero">
+    <div class="eyebrow">Warum du dich so fühlst</div>
+    <h1>Nervensystem-<br>Check</h1>
+    <div class="line"></div>
+    <p>Ich kenne dieses Gefühl.</p>
+    <p>Erschöpft, obwohl du gerade erst aufgewacht bist. Gereizt, obwohl du es nicht möchtest. Leer, obwohl du alles gibst.</p>
+    <p>Ich war dort. Nach meiner ersten Geburt habe ich funktioniert – perfekt nach außen. Aber innerlich war irgendwann nichts mehr übrig. Kein Raum für mich. Kein Gefühl dafür, wer ich noch bin, jenseits von Mama und Durchhalten.</p>
+    <p>Irgendwann habe ich aufgehört, das zu ignorieren. Und angefangen zu verstehen, was mein Körper mir schon lange sagen wollte.</p>
+    <p>Dieser Check ist das, was ich mir damals gewünscht hätte. Ein ehrlicher Spiegel. Keine Urteile. Nur die Wahrheit darüber, wo du gerade stehst.</p>
+    <button class="btn" id="startBtn">Jetzt herausfinden &#8594;</button>
+  </div>
+  <div class="brand">maria.familienglueck</div>
+</div>
+
+<div id="p-quiz" class="page">
+  <div class="quiz-wrap">
+    <div class="wrap">
+      <div class="intro-box">
+        <strong>Dein Nervensystem ist wie dein inneres Steuerzentrum.</strong><br>
+        Es entscheidet, ob du dich ruhig, sicher und stabil fühlst &#8211; oder gestresst, überfordert und ständig angespannt. Viele Mamas leben dauerhaft im Stressmodus, ohne es zu merken. Dieser Test hilft dir zu erkennen, wo du gerade stehst.
+      </div>
+      <div class="prog-meta"><span>Dein Fortschritt</span><span id="progTxt">0 / 7</span></div>
+      <div class="prog-bar"><div class="prog-fill" id="progFill" style="width:0%"></div></div>
+      <div id="qList"></div>
+      <div class="sub-wrap" id="subWrap">
+        <button class="btn btn-lg" id="subBtn">Auswertung anzeigen</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="p-result" class="page">
+  <div class="res-top">
+    <div class="eyebrow">Dein Weg zurück zu dir &#8211; deine Auswertung</div>
+    <div class="srow">
+      <span class="snum" id="rNum">0</span>
+      <span class="smax">/ 21 Punkte</span>
+    </div>
+    <div class="barout">
+      <div class="barlabels"><span>0</span><span>21</span></div>
+      <div class="bartrack"><div class="barfill" id="rBar"></div></div>
+    </div>
+    <div class="rtitle" id="rTitle"></div>
+    <div class="rbody" id="rBody"></div>
+  </div>
+  <div class="nextsec">
+    <div class="nextinner">
+      <div class="nextlabel">Deine nächsten Schritte</div>
+      <div id="rSteps"></div>
+    </div>
+  </div>
+  <div class="ctasec">
+    <div class="ctaeye">Lass uns gemeinsam schauen</div>
+    <div class="ctah">Lass uns deine nächsten<br>Schritte planen.</div>
+    <div class="ctasub">30 Minuten. Nur für dich. Kostenlos.<br><br>Wir schauen gemeinsam auf dein Ergebnis und ich zeige dir, was dein Körper gerade wirklich braucht.<br><br>Kein Druck. Keine Verpflichtung.<br>Nur ein ehrliches Gespräch – von Mama zu Mama.</div>
+    <a class="btnwa" href="https://wa.me/4915225729074">Jetzt Termin sichern &#8594;</a>
+    <div class="ctanote">stark limitiert &middot; maria.familienglueck</div>
+  </div>
+</div>
+
+<script>
+(function(){
+
+  // Fragen: text, ob "Ja" = schlecht (true) oder gut (false)
+  var questions = [
+    {q:"Fällt es dir schwer, wirklich abzuschalten – selbst wenn Ruhe ist?", jaIstSchlecht:true},
+    {q:"Reagierst du schneller gereizt, als du eigentlich möchtest?", jaIstSchlecht:true},
+    {q:"Fühlst du dich oft leer oder ausgelaugt?", jaIstSchlecht:true},
+    {q:"Kannst du in ruhigen Momenten wirklich durchatmen und loslassen?", jaIstSchlecht:false},
+    {q:"Fällt es dir schwer, nichts zu tun, ohne schlechtes Gewissen?", jaIstSchlecht:true},
+    {q:"Fühlst du dich nach Pausen nicht wirklich erholt?", jaIstSchlecht:true},
+    {q:"Hast du das Gefühl, dich selbst etwas verloren zu haben?", jaIstSchlecht:true}
+  ];
+
+  var answers = [null,null,null,null,null,null,null];
+  var currentQ = 0;
+
+  var results = [
+    {
+      sc:"cg", bc:"fg",
+      t:"Dein Nervensystem ist noch relativ stabil.",
+      b:"<p>Du hast Zugang zu Ruhe. Zu Momenten, in denen du wirklich runterfahren kannst. Vielleicht nicht immer, vielleicht nicht jeden Tag – aber dein System kennt diesen Zustand noch gut.</p><p><strong>Denn auch wenn sich dein Alltag manchmal viel anfühlt: du hast eine gute Basis.</strong></p><p>Du musst nicht erst am Limit sein, um dich um dich selbst zu kümmern.</p>",
+      steps:[
+        {t:"Präventiv ansetzen",p:"Jetzt ist der ideale Zeitpunkt, dein Nervensystem aktiv zu unterstützen – bevor der Akku leer ist."},
+        {t:"Die richtigen Nährstoffe kennenlernen",p:"Was dein Körper wirklich braucht, um stabil zu bleiben – langfristig."},
+        {t:"Gemeinsam planen",p:"In einem kostenlosen Gespräch schauen wir gemeinsam, was du jetzt tun kannst."}
+      ]
+    },
+    {
+      sc:"cy", bc:"fy",
+      t:"Du funktionierst. Aber dein Nervensystem ist längst nicht mehr entspannt.",
+      b:"<p>Du bist schneller gereizt. Hast weniger Geduld. Kommst schlechter zur Ruhe – selbst dann, wenn eigentlich Zeit dafür wäre.</p><p>Und genau das ist der Punkt, an dem viele Mamas merken: <strong>So wie es gerade ist, will ich nicht weitermachen.</strong></p><p>Du brauchst nicht noch mehr Disziplin. Du brauchst Entlastung – für dich und dein Nervensystem.</p>",
+      steps:[
+        {t:"Verstehen, was gerade passiert",p:"Dein Körper sendet Signale. Wir schauen gemeinsam, was genau dein System gerade fordert."},
+        {t:"Gezielte Unterstützung",p:"Nährstoffe, Routinen, ätherische Öle – was genau jetzt für dich Sinn macht."},
+        {t:"Dein nächster konkreter Schritt",p:"Im kostenlosen Gespräch bekommst du ein individuelles Bild – kein generischer Ratschlag."}
+      ]
+    },
+    {
+      sc:"cr", bc:"fr",
+      t:"Dein Nervensystem läuft gerade im Dauerstress-Modus.",
+      b:"<p>Dein Körper ist ständig im Alarm. <strong>Selbst wenn es im Außen ruhig ist, bleibt dein Inneres unruhig.</strong></p><p>Das ist kein Zeichen von Schwäche. Das ist ein Zeichen, dass dein System zu lange zu viel getragen hat.</p><p>Du hast nicht versagt. Du bist einfach erschöpft. Und genau hier darfst du ansetzen – indem du dich wieder versorgst.</p>",
+      steps:[
+        {t:"An der Wurzel ansetzen",p:"Dein Nervensystem braucht jetzt gezielte Unterstützung – keine weiteren Anforderungen."},
+        {t:"Die richtigen Nährstoffe",p:"Zu 90% liegt Regulation hier. Wir schauen, was deinem Körper konkret fehlt."},
+        {t:"Du musst das nicht alleine herausfinden",p:"Im Gespräch bekommst du Klarheit und einen ersten machbaren Schritt."}
+      ]
+    }
+  ];
+
+  function showPage(id) {
+    var pages = document.querySelectorAll('.page');
+    for(var i=0;i<pages.length;i++) pages[i].classList.remove('active');
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  function getScore(qIdx, val) {
+    // val: 3=Ja, 1=Manchmal, 0=Nein
+    if(questions[qIdx].jaIstSchlecht) {
+      return val; // Ja=3 Punkte (schlecht), Nein=0
+    } else {
+      // Frage ist umgekehrt: Ja=gut=0 Punkte, Nein=schlecht=3 Punkte
+      if(val===3) return 0;
+      if(val===1) return 1;
+      return 3;
+    }
+  }
+
+  function showQuestion(idx) {
+    var list = document.getElementById('qList');
+    var q = questions[idx];
+    var card = document.createElement('div');
+    card.className = 'qcard';
+    card.id = 'qc'+idx;
+
+    var jaIstSchlecht = q.jaIstSchlecht;
+    // Buttons: immer Ja / Manchmal / Nein
+    // Farben je nach Richtung
+    var jaClass   = jaIstSchlecht ? 'sschlecht' : 'sgut';
+    var neinClass = jaIstSchlecht ? 'sgut' : 'sschlecht';
+
+    card.innerHTML = '<div class="qlabel">Frage '+(idx+1)+' von 7</div>'
+      +'<div class="qtext">'+q.q+'</div>'
+      +'<div class="arow" id="ar'+idx+'"></div>';
+    list.appendChild(card);
+
+    setTimeout(function(){ card.classList.add('visible'); }, 50);
+
+    var row = document.getElementById('ar'+idx);
+    var opts = [
+      {label:'Ja',   val:3, selCls: jaClass},
+      {label:'Manchmal', val:1, selCls:'smid'},
+      {label:'Nein', val:0, selCls: neinClass}
+    ];
+
+    opts.forEach(function(o){
+      var b = document.createElement('button');
+      b.className = 'abtn';
+      b.textContent = o.label;
+      b.onclick = function(){
+        // Mark selected
+        var btns = row.querySelectorAll('.abtn');
+        for(var k=0;k<btns.length;k++) btns[k].classList.remove('sgut','smid','sschlecht');
+        b.classList.add(o.selCls);
+        answers[idx] = o.val;
+
+        // Disable all buttons in this card
+        for(var k=0;k<btns.length;k++) btns[k].onclick = null;
+
+        // Update progress
+        currentQ = idx + 1;
+        var pct = Math.round((idx+1)/7*100);
+        document.getElementById('progFill').style.width = pct+'%';
+        document.getElementById('progTxt').textContent = (idx+1)+' / 7';
+
+        // Next question or show submit
+        setTimeout(function(){
+          if(idx < 6) {
+            showQuestion(idx+1);
+            // Scroll to new card
+            setTimeout(function(){
+              var newCard = document.getElementById('qc'+(idx+1));
+              if(newCard) newCard.scrollIntoView({behavior:'smooth', block:'center'});
+            }, 100);
+          } else {
+            // All done
+            var sw = document.getElementById('subWrap');
+            sw.classList.add('visible');
+            setTimeout(function(){
+              sw.scrollIntoView({behavior:'smooth', block:'center'});
+            }, 100);
+          }
+        }, 300);
+      };
+      row.appendChild(b);
+    });
+  }
+
+  function buildQuiz() {
+    document.getElementById('qList').innerHTML = '';
+    showQuestion(0);
+  }
+
+  function showResult() {
+    var total = 0;
+    for(var i=0;i<answers.length;i++) total += getScore(i, answers[i]||0);
+    var r = total>=15 ? results[2] : total>=8 ? results[1] : results[0];
+
+    document.getElementById('rNum').textContent = total;
+    document.getElementById('rNum').className = 'snum '+r.sc;
+    document.getElementById('rTitle').textContent = r.t;
+    document.getElementById('rBody').innerHTML = r.b;
+
+    var bar = document.getElementById('rBar');
+    bar.className = 'barfill '+r.bc;
+    bar.style.width = '0%';
+
+    var html = '';
+    for(var i=0;i<r.steps.length;i++){
+      html += '<div class="step"><div class="stepnum">'+(i+1)+'</div>'
+        +'<div><div class="stept">'+r.steps[i].t+'</div>'
+        +'<div class="stepp">'+r.steps[i].p+'</div></div></div>';
+    }
+    document.getElementById('rSteps').innerHTML = html;
+    showPage('p-result');
+    setTimeout(function(){ bar.style.width = Math.round(total/21*100)+'%'; }, 200);
+  }
+
+  document.getElementById('startBtn').onclick = function(){
+    showPage('p-quiz');
+    buildQuiz();
+  };
+
+  document.getElementById('subBtn').onclick = function(){
+    showResult();
+  };
+
+})();
+</script>
+</body>
+</html>
